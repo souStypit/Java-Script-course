@@ -19,10 +19,13 @@ document.querySelector('.again').addEventListener('click', () => {
   document.querySelector('.question').textContent = '???';
   document.querySelector('.guess-message').textContent = 'Начни угадывать';
   document.querySelector('body').style.backgroundColor = '#000';
+  document.querySelector('.question').style.width = '25rem';
 
   if(endGame) score = 20;
+  document.querySelector('.score').textContent = score;
   rand = Math.round(Math.random() * 20 + 1);
   notGuessed = true;
+  endGame = false;
 });
 
 document.querySelector('.check').addEventListener('click', () => {
@@ -41,6 +44,7 @@ document.querySelector('.check').addEventListener('click', () => {
     document.querySelector('.guess-message').textContent = 'Угадал!';
     document.querySelector('.question').textContent = rand;
     document.querySelector('body').style.backgroundColor = '#217e24';
+    document.querySelector('.question').style.width = '50rem';
 
     if (notGuessed) score += 5;
     document.querySelector('.score').textContent = score;
@@ -69,5 +73,6 @@ document.querySelector('.check').addEventListener('click', () => {
   document.querySelector('.score').textContent = 0;
   document.querySelector('body').style.backgroundColor = '#c53b3b';
   endGame = true;
+  console.log(endGame);
   return;
 });
