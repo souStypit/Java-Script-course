@@ -1,3 +1,5 @@
 'use strict';
 
-document.querySelector('.guess-message');
+let text = document.querySelector('.guess-message').textContent;
+
+console.log(text);
