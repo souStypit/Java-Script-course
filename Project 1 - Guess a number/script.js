@@ -1,3 +1,3 @@
 'use strict';
 
-document.querySelector('.guess-message')
+document.querySelector('.guess-message');
