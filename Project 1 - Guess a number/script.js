@@ -1,78 +1,84 @@
 'use strict';
 
-// document.querySelector('.guess-message').textContent;
-
-// document.querySelector('.guess-message').textContent = 'Правильно!';
-
-// document.querySelector('.question').textContent = 7;
-
-// document.querySelector('.score').textContent = 11;
-
-// document.querySelector('.number-input').value = 13;
-
 let rand = Math.round(Math.random() * 19 + 1);
+let hs = document.querySelector('.highscore').textContent;
 let score = 20;
 let notGuessed = true;
-let endGame = false;
+let finish = false;
 
+const setGuessMessage = (text) => document.querySelector('.guess-message').textContent = text;
+const setScore= (value) => document.querySelector('.score').textContent = value;
+const setQuest = (text) => document.querySelector('.question').textContent = text;
+
+const setBodyStyle = () => document.querySelector('body').style;
+const setQuestStyle = () => document.querySelector('.question').style;
+
+//BUTTON Again
 document.querySelector('.again').addEventListener('click', () => {
-  document.querySelector('.question').textContent = '???';
-  document.querySelector('.guess-message').textContent = 'Начни угадывать';
-  document.querySelector('body').style.backgroundColor = '#000';
-  document.querySelector('.question').style.width = '25rem';
+  //start values
+  setQuest('???');
+  setGuessMessage('Начни угадывать');
+  setBodyStyle().backgroundColor = '#000';
+  setQuestStyle().width = '25rem';
 
-  if(endGame) score = 20;
-  document.querySelector('.score').textContent = score;
+  //restart game and score
+  if (finish) {
+    score = 20;
+    setScore(score);
+    finish = false;
+  }
+
   rand = Math.round(Math.random() * 20 + 1);
   notGuessed = true;
-  endGame = false;
+
+  //change highscore
+  if (score > hs) {
+    hs = score;
+    document.querySelector('.highscore').textContent = hs;
+  }
 });
 
+//BUTTON Checking
 document.querySelector('.check').addEventListener('click', () => {
   //input
   const guessingNumber = Number(document.querySelector('.number-input').value);
-  console.log(rand);
 
   //if number wasn't entered
   if (!guessingNumber) {
-    document.querySelector('.guess-message').textContent = 'Введите число!';
+    setGuessMessage('Введите число!');
     return;
   }
 
-  //input section
+  //************input section************
   if (guessingNumber === rand) {
-    document.querySelector('.guess-message').textContent = 'Угадал!';
-    document.querySelector('.question').textContent = rand;
-    document.querySelector('body').style.backgroundColor = '#217e24';
-    document.querySelector('.question').style.width = '50rem';
+    setGuessMessage('Угадал!');
+    setQuest(rand);
+    setBodyStyle().backgroundColor = '#217e24';
+    setQuestStyle().width = '50rem';
 
     if (notGuessed) score += 5;
-    document.querySelector('.score').textContent = score;
+    setScore(score);
     notGuessed = false;
     return;
   }
 
+  //input !== rand
   if (score > 1) {
-    //input > rand
-    if (guessingNumber > rand) {
-      document.querySelector('.guess-message').textContent = 'Меньше!';
-      document.querySelector('.score').textContent = --score;
-    }
-    //input < rand
-    else {
-      document.querySelector('.guess-message').textContent = 'Больше!';
-      document.querySelector('.score').textContent = --score;
-    }
+    if (guessingNumber !== rand)
+      setGuessMessage(guessingNumber > rand ? 'Меньше!' : 'Больше!');
 
-    document.querySelector('body').style.backgroundColor = '#e89c32';
+    setScore(--score);
+    setBodyStyle().backgroundColor = '#e89c32';
     return;
   }
 
   //if score = 0
-  document.querySelector('.guess-message').textContent = 'Конец игры';
-  document.querySelector('.score').textContent = 0;
-  document.querySelector('body').style.backgroundColor = '#c53b3b';
-  endGame = true;
-  console.log(endGame);
+  setGuessMessage('Конец игры');
+  setScore(0);
+  setBodyStyle().backgroundColor = '#c53b3b';
+  finish = true;
+  console.log(finish);
   return;
+  
+  //************end input section************
 });
