@@ -1,0 +1,22 @@
+body {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(85, 85, 120);
+
+    height: 100vh;
+
+    margin: 0;
+
+    color: rgb(255, 220, 137);
+    font-size: 18px;
+    text-align: center;
+}
+
+div {
+    margin: auto 0 auto;
+}
+
+div span:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
