@@ -1,21 +1,24 @@
 'use strict';
 
+//variables
 let rand = Math.round(Math.random() * 19 + 1);
 let hs = document.querySelector('.highscore').textContent;
 let score = 20;
 let notGuessed = true;
 let finish = false;
 
+//text content editors
 const setGuessMessage = (text) => document.querySelector('.guess-message').textContent = text;
 const setScore= (value) => document.querySelector('.score').textContent = value;
 const setQuest = (text) => document.querySelector('.question').textContent = text;
 
+//style editors
 const setBodyStyle = () => document.querySelector('body').style;
 const setQuestStyle = () => document.querySelector('.question').style;
 
 //BUTTON Again
 document.querySelector('.again').addEventListener('click', () => {
-  //start values
+  //restart values
   setQuest('???');
   setGuessMessage('Начни угадывать');
   setBodyStyle().backgroundColor = '#000';
@@ -50,6 +53,7 @@ document.querySelector('.check').addEventListener('click', () => {
   }
 
   //************input section************
+  //if number guessed
   if (guessingNumber === rand) {
     setGuessMessage('Угадал!');
     setQuest(rand);
