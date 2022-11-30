@@ -21,6 +21,9 @@ btnsShowModalWindow.forEach((el) =>
 
 btnCloseModalWindow.addEventListener('click', closeModalWindow);
 
-document.addEventListener('keyup')
-
 overlay.addEventListener('click', closeModalWindow);
+
+document.addEventListener('keydown', (el) => {
+  if (el.key === 'Escape' && !modalWindow.classList.contains('hidden'))
+    closeModalWindow();
+});
