@@ -1,6 +1,7 @@
 'use strict';
 
 //variables
+let finalScore = 100;
 let rand = 0; //{1, 6}
 let turn = 0; //{0, 1}
 let scoreSet = [0, 0];
@@ -9,8 +10,8 @@ let currentSet = [0, 0];
 let setCurrentSet = [setCurrent0, setCurrent1];
 let playerSet = [
   document.querySelector('.player--0'),
-  document.querySelector('.player--1')
-]
+  document.querySelector('.player--1'),
+];
 let dices = [
   'dice1.png',
   'dice2.png',
@@ -22,8 +23,8 @@ let dices = [
 
 //buttons
 const btnNew = document.querySelector('.btn--new');
-const btnRoll = document.querySelector('.btn--roll');
-const btnHold = document.querySelector('.btn--hold');
+let btnRoll = document.querySelector('.btn--roll');
+let btnHold = document.querySelector('.btn--hold');
 
 //funtions
 function setScore0(value) {
@@ -36,18 +37,24 @@ function setScore1(value) {
 }
 
 function setCurrent0(value) {
-  currentSet[0] = value
+  currentSet[0] = value;
   document.querySelector('#current--0').textContent = value;
 }
 function setCurrent1(value) {
-  currentSet[1] = value
+  currentSet[1] = value;
   document.querySelector('#current--1').textContent = value;
 }
 
 function changeTurn() {
-  playerSet[turn].classList.remove('player--active')
-  turn === 0 ? turn = 1 : turn = 0;
-  playerSet[turn].classList.add('player--active')
+  playerSet[turn].classList.remove('player--active');
+  turn === 0 ? (turn = 1) : (turn = 0);
+  playerSet[turn].classList.add('player--active');
+}
+
+function setGameOver(player) {
+  playerSet[player].classList.add('player--winner');
+  btnHold.removeEventListener('click', holding);
+  btnRoll.removeEventListener('click', rolling);
 }
 
 function initialValues() {
@@ -55,6 +62,9 @@ function initialValues() {
   setScore1(0);
   setCurrent0(0);
   setCurrent1(0);
+  btnRoll.addEventListener('click', rolling);
+  btnHold.addEventListener('click', holding);
+  playerSet.forEach(el => el.classList.remove('player--winner'));
 
   if (turn === 1) changeTurn();
 }
@@ -75,9 +85,12 @@ function rolling() {
 function holding() {
   let sum = scoreSet[turn] + currentSet[turn];
 
-  setCurrentSet[turn](sum)
+  setCurrentSet[turn](sum);
   setScoreSet[turn](0);
-  changeTurn();
+
+  if (currentSet[turn] > finalScore) {
+    setGameOver(turn);
+  } else changeTurn();
 }
 
 //main section
